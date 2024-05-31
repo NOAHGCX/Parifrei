@@ -1,0 +1,52 @@
+version: '3.6'
+
+services:
+  postgres:
+    image: postgres:15
+    restart: always
+    volumes:
+      - ./docker/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres_user
+      POSTGRES_DB: hasura_db
+    networks:
+      - app-network
+
+  graphql-engine:
+    image: hasura/graphql-engine:v2.0.10
+    restart: always
+    ports:
+      - '8080:8080'
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres_user:password@postgres:5432/hasura_db
+      HASURA_GRAPHQL_ENABLE_CONSOLE: 'true'
+      HASURA_GRAPHQL_ADMIN_SECRET: password
+    depends_on:
+      - postgres
+    volumes:
+      - ./hasura/migrations:/hasura-migrations
+      - ./hasura/metadata:/hasura-metadata
+    networks:
+      - app-network
+      
+  site:
+    image: docker.io/bitnami/node:20
+    command: sh -c 'npm install -g astro && npm install && npm run dev'
+    environment:
+      PORT: 3000
+      NODE_ENV: development
+    volumes:
+      - .:/app
+    restart: always
+    networks:
+      - app-network
+    ports:
+      - '3000:3000'
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
