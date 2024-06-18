@@ -2,17 +2,21 @@
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
 import "../styles/global.css";
-import Exemple from "../react/components/Exemple";
+import Header from "../components/Header.jsx";
+import Footer from "../components/Footer.jsx";
 ---
 
 <html>
   <head>
-    <title>Astro with React and Tailwind</title>
+    <meta charset="utf-8" />
+    <title>Accueil - Parifree</title>
   </head>
   <body>
-    <h1 class="text-2xl font-bold text-center mt-8">
-      Welcome to Astro with React and Tailwind CSS
-    </h1>
-    <Exemple />
+    <Header />
+    <main>
+      <h2>Bienvenue sur mon site web</h2>
+      <p>Ceci est la page d'accueil de mon site web.</p>
+    </main>
+    <Footer />
   </body>
 </html>
