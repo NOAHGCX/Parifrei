@@ -1,59 +1,40 @@
----
-
----
-<footer style="background-color: #02151c; color: #fbfbfb; padding: 1rem; text-align: center;">
-    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto" id="footer-container">
-        <div style="flex: 1;">
-            <a href="/">
-                <img src="/logo.png" alt="Logo" style="height: 150px">
-            </a>
-        </div>
-        <div style="flex: 3; display: flex; justify-content: space-around;" id="footer-sub-container">
-            <div style="text-align: left;" class="footer-column">
-                <h2 style="margin-bottom: 0.5rem; font-size: 20px;">Nous contacter</h2>
-                <nav>
-                <h4 style="display: block; margin-bottom: 0.25rem;">30-32 av. de la République</br>94800 Villejuif</h4>
-                <h4 style="display: block; margin-bottom: 0.25rem;">01 88 28 90 00</h4>
-                <h4 style="display: block; margin-bottom: 2.5rem;">dede.dupont@gmail.com</h4>
-                </nav>
-            </div>
-            <div style="text-align: left;" class="footer-column">
-                <h2 style="margin-bottom: 0.5rem; font-size: 20px;">Navigation</h2>
-                <nav>
-                <a href="/" style="display: block; margin-bottom: 0.25rem;">Accueil</a>
-                <a href="/Prochains événements" style="display: block; margin-bottom: 0.25rem;">Prochains événements</a>
-                <a href="/Comparateur" style="display: block; margin-bottom: 0.25rem;">Comparateur</a>
-                <a href="/Classement" style="display: block; margin-bottom: 0.25rem;">Classement</a>
-                </nav>
-            </div>
-        </div>
+<footer class="bg-[#02151c] text-[#fbfbfb] p-4 text-center">
+  <div
+    class="flex flex-col md:flex-row justify-center items-center max-w-screen-xl mx-auto"
+    id="footer-container"
+  >
+    <div class="flex-1 mb-4 md:mb-0 md:mx-4">
+      <a href="/">
+        <img src="/logo.png" alt="Logo" class="h-36 mx-auto md:mx-0" />
+      </a>
     </div>
+    <div
+      class="flex-3 flex flex-col md:flex-row justify-center items-center w-full md:w-auto md:mx-4"
+      id="footer-sub-container"
+    >
+      <div class="footer-column text-center md:text-left mb-4 md:mb-0 md:mx-4">
+        <h2 class="mb-2 text-lg">Nous contacter</h2>
+        <nav>
+          <h4 class="block mb-1">
+            30-32 av. de la République<br />94800 Villejuif
+          </h4>
+          <h4 class="block mb-1">01 88 28 90 00</h4>
+          <h4 class="block mb-6">dede.dupont@gmail.com</h4>
+        </nav>
+      </div>
+      <div
+        class="footer-column text-center md:text-left hidden md:block md:mx-4"
+      >
+        <h2 class="mb-2 text-lg">Navigation</h2>
+        <nav>
+          <a href="/" class="block mb-1">Accueil</a>
+          <a href="/Prochains événements" class="block mb-1"
+            >Prochains événements</a
+          >
+          <a href="/Comparateur" class="block mb-1">Comparateur</a>
+          <a href="/Classement" class="block mb-1">Classement</a>
+        </nav>
+      </div>
+    </div>
+  </div>
 </footer>
-  
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const footerContainer = document.getElementById("footer-container");
-    const footerSubContainer = document.getElementById("footer-sub-container");
-    const footerColumn = document.getElementsByClassName("footer-column");
-
-    window.addEventListener("load", resize);
-    window.addEventListener("resize", resize);
-
-    function resize() {
-        if (window.innerWidth >= 768) {
-            footerContainer?.setAttribute("style", "display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto");
-            footerSubContainer?.setAttribute("style", "flex: 3; display: flex; justify-content: space-around");
-            for (let i = 0; i < footerColumn.length; i++) {
-                footerColumn[i].setAttribute("style", "text-align: left");
-            }
-        } else {
-            footerContainer?.setAttribute("style", "display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 1200px; margin: 0 auto");
-            footerSubContainer?.setAttribute("style", "display: flex; flex-direction: column; justify-content: center; align-items: center");
-            for (let i = 0; i < footerColumn.length; i++) {
-                footerColumn[i].setAttribute("style", "text-align: center");
-            }
-        }
-    }
-});
-
-</script>
