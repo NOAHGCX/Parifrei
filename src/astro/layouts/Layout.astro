@@ -1,12 +1,6 @@
 ---
-import { homepage } from "../../mock/homepage";
 import Nav from "../nav/nav.astro";
-interface Props {
-  title: string;
-}
-
 const { title } = Astro.props;
-const { nav } = homepage;
 ---
 
 <!doctype html>
@@ -20,8 +14,8 @@ const { nav } = homepage;
     <title>{title}</title>
   </head>
   <body>
-    <Nav {...nav} />
-    <main>
+    <Nav />
+    <main id="main-content" class="pt-[67px]">
       <slot />
     </main>
   </body>
@@ -53,5 +47,10 @@ const { nav } = homepage;
       Bitstream Vera Sans Mono,
       Courier New,
       monospace;
+  }
+  main {
+    min-height: calc(
+      100vh - 138px
+    ); /* Adjust this value according to your header height */
   }
 </style>

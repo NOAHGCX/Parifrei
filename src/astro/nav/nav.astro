@@ -1,34 +1,41 @@
 ---
 import MenuSVG from "../SVG/MenuSVG.astro";
 
-export interface NavMenu {
-  label: string;
-  href: string;
-  external?: boolean;
-}
-
-export interface Props {
-  logo: string;
-  button: string;
-}
-
 const currentPath = Astro.url.pathname;
-const active = "text-black";
+const activeClass = "text-black";
 const admin = Astro.url.pathname.split("/").includes("admin");
 ---
 
-<nav class="fixed z-50 w-full top-0 h-[98px] bg-[#02151C] flex justify-center">
+<nav
+  class="w-full bg-[#02151C] top-0 z-50 border-gray-200 dark:border-gray-600"
+>
   <div class="w-full bg-[#02151C]">
     <!-- Mobile Header Image -->
     <div class="block sm:hidden">
       <img src="/headerMobile.png" alt="Header Mobile" class="w-full" />
     </div>
-    <!-- Tablet and Desktop Header Image -->
-    <div class="hidden sm:block">
+    <!-- Tablet and Desktop Header Image with overlay arrow -->
+    <div class="relative hidden sm:block" id="header-desktop">
       <img src="/headerDesktop.png" alt="Header Desktop" class="w-full" />
+      <a
+        href="#main-content"
+        class="absolute inset-0 flex justify-center items-end pb-5"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-10 w-10 text-white"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 18a1 1 0 01-.7-.3l-7-7a1 1 0 111.4-1.4L10 15.6l6.3-6.3a1 1 0 111.4 1.4l-7 7a1 1 0 01-.7.3z"
+            clip-rule="evenodd"></path>
+        </svg>
+      </a>
     </div>
-    <div class="w-full py-5 bg-[#02151C] flex items-center">
-      <nav class="w-full">
+    <div class="w-full py-5 flex items-center" id="navbar-inner">
+      <div class="w-full">
         <div
           class="px-[20px] xl:px-0 w-full xl:container mx-auto flex items-center justify-between h-[98px]"
         >
@@ -37,26 +44,29 @@ const admin = Astro.url.pathname.split("/").includes("admin");
               class="flex xl:space-x-[52px] xl:text-[20px] xl:font-medium font-roboto-regular"
             >
               <li>
-                <a href={`/Prochain événements`}>Prochain événements</a>
+                <a href="/Prochain événements" class="hover:text-gray-300"
+                  >Prochain événements</a
+                >
               </li>
               <li>
-                <a href={`/Comparateur`}>Comparateur</a>
+                <a href="/Comparateur" class="hover:text-gray-300"
+                  >Comparateur</a
+                >
               </li>
               <li>
-                <a href={`Classement`}>Classement</a>
+                <a href="/Classement" class="hover:text-gray-300">Classement</a>
               </li>
             </ul>
           </div>
           <div class="hidden xl:flex items-center">
-            <a href={`/`}>
+            <a href="/">
               <img src="/logo.png" alt="logo" class="h-[89px] w-[95px]" />
             </a>
           </div>
           <div class="xl:hidden flex items-center ml-auto">
             <button
-              data-collapse-toggle="mobile-menu"
+              id="mobile-menu-button"
               class="text-gray-400 hover:text-gray-900 focus:ring-black rounded-lg inline-flex items-center justify-center"
-              aria-controls="mobile-menu-2"
               aria-expanded="false"
               aria-label="Ouvrir le menu"
             >
@@ -64,47 +74,53 @@ const admin = Astro.url.pathname.split("/").includes("admin");
             </button>
           </div>
         </div>
-        <div class="hidden" id="mobile-menu">
+        <div
+          class="hidden absolute left-0 w-full bg-[#02151C] z-50"
+          id="mobile-menu"
+        >
           <ul
             class="flex flex-col space-y-4 text-white font-roboto-regular mt-4 px-[20px]"
           >
             <li>
-              <a href={`/Prochain événements`}>Prochain événements</a>
+              <a href="/Prochain événements" class="hover:text-gray-300"
+                >Prochain événements</a
+              >
             </li>
             <li>
-              <a href={`/Comparateur`}>Comparateur</a>
+              <a href="/Comparateur" class="hover:text-gray-300">Comparateur</a>
             </li>
             <li>
-              <a href={`Classement`}>Classement</a>
+              <a href="/Classement" class="hover:text-gray-300">Classement</a>
             </li>
           </ul>
         </div>
-      </nav>
+      </div>
     </div>
   </div>
 </nav>
 
-<script src="./nav.js"></script>
-<!-- <script>
-let disableLinks = true
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const mobileMenuButton = document.getElementById("mobile-menu-button");
+    const mobileMenu = document.getElementById("mobile-menu");
 
-document.addEventListener('keydown', function (event) {
-  if (event.keyCode === 65) {
-    disableLinks = false
-  }
-})
+    mobileMenuButton.addEventListener("click", function () {
+      const isExpanded =
+        mobileMenuButton.getAttribute("aria-expanded") === "true";
+      mobileMenuButton.setAttribute("aria-expanded", !isExpanded);
+      mobileMenu.classList.toggle("hidden");
+    });
 
-document.addEventListener('keyup', function (event) {
-  if (event.keyCode === 65) {
-    disableLinks = true
-  }
-})
+    window.addEventListener("resize", function () {
+      if (window.innerWidth >= 768) {
+        mobileMenu.classList.add("hidden");
+        mobileMenuButton.setAttribute("aria-expanded", "false");
+      }
+    });
 
-function handleLinkClick(event) {
-  if (disableLinks && !event.target.href.includes('formation')) {
-    event.preventDefault()
-  }
-
-const links = document.querySelectorAll('a')
-links.forEach((link) => link.addEventListener('click', handleLinkClick))
-</script> -->
+    // Initial check to set the navbar background color correctly on load
+    if (window.scrollY > 0) {
+      document.getElementById("navbar").classList.add("bg-[#02151C]");
+    }
+  });
+</script>
