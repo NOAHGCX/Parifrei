@@ -1,0 +1,110 @@
+---
+import MenuSVG from "../SVG/MenuSVG.astro";
+
+export interface NavMenu {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
+export interface Props {
+  logo: string;
+  button: string;
+}
+
+const currentPath = Astro.url.pathname;
+const active = "text-black";
+const admin = Astro.url.pathname.split("/").includes("admin");
+---
+
+<nav class="fixed z-50 w-full top-0 h-[98px] bg-[#02151C] flex justify-center">
+  <div class="w-full bg-[#02151C]">
+    <!-- Mobile Header Image -->
+    <div class="block sm:hidden">
+      <img src="/headerMobile.png" alt="Header Mobile" class="w-full" />
+    </div>
+    <!-- Tablet and Desktop Header Image -->
+    <div class="hidden sm:block">
+      <img src="/headerDesktop.png" alt="Header Desktop" class="w-full" />
+    </div>
+    <div class="w-full py-5 bg-[#02151C] flex items-center">
+      <nav class="w-full">
+        <div
+          class="px-[20px] xl:px-0 w-full xl:container mx-auto flex items-center justify-between h-[98px]"
+        >
+          <div class="hidden xl:flex w-full text-white items-center ml-[70px]">
+            <ul
+              class="flex xl:space-x-[52px] xl:text-[20px] xl:font-medium font-roboto-regular"
+            >
+              <li>
+                <a href={`/Prochain événements`}>Prochain événements</a>
+              </li>
+              <li>
+                <a href={`/Comparateur`}>Comparateur</a>
+              </li>
+              <li>
+                <a href={`Classement`}>Classement</a>
+              </li>
+            </ul>
+          </div>
+          <div class="hidden xl:flex items-center">
+            <a href={`/`}>
+              <img src="/logo.png" alt="logo" class="h-[89px] w-[95px]" />
+            </a>
+          </div>
+          <div class="xl:hidden flex items-center ml-auto">
+            <button
+              data-collapse-toggle="mobile-menu"
+              class="text-gray-400 hover:text-gray-900 focus:ring-black rounded-lg inline-flex items-center justify-center"
+              aria-controls="mobile-menu-2"
+              aria-expanded="false"
+              aria-label="Ouvrir le menu"
+            >
+              <MenuSVG />
+            </button>
+          </div>
+        </div>
+        <div class="hidden" id="mobile-menu">
+          <ul
+            class="flex flex-col space-y-4 text-white font-roboto-regular mt-4 px-[20px]"
+          >
+            <li>
+              <a href={`/Prochain événements`}>Prochain événements</a>
+            </li>
+            <li>
+              <a href={`/Comparateur`}>Comparateur</a>
+            </li>
+            <li>
+              <a href={`Classement`}>Classement</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+</nav>
+
+<script src="./nav.js"></script>
+<!-- <script>
+let disableLinks = true
+
+document.addEventListener('keydown', function (event) {
+  if (event.keyCode === 65) {
+    disableLinks = false
+  }
+})
+
+document.addEventListener('keyup', function (event) {
+  if (event.keyCode === 65) {
+    disableLinks = true
+  }
+})
+
+function handleLinkClick(event) {
+  if (disableLinks && !event.target.href.includes('formation')) {
+    event.preventDefault()
+  }
+
+const links = document.querySelectorAll('a')
+links.forEach((link) => link.addEventListener('click', handleLinkClick))
+</script> -->
