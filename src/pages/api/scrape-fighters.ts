@@ -90,8 +90,10 @@ const scrapeFighterUrlsFromPage = async (pageNumber) => {
     const fighterUrls = [];
     $('.c-listing-athlete-flipcard__inner').each((i, elem) => {
       const profilePath = $(elem).find('.c-listing-athlete-flipcard__action a').attr('href');
-      const name = $(elem).find('.c-listing-athlete__name').text().trim();
-      const nickname = $(elem).find('.c-listing-athlete__nickname .field__item').text().trim();
+      const name = $(elem).find('.c-listing-athlete__name').first().text().trim();
+      console.log(name);
+      const nickname = $(elem).find('.c-listing-athlete__nickname .field__item').first().text().trim();
+      console.log(nickname);
       const record = $(elem).find('.c-listing-athlete__record').text().trim();
       const weight_class = $(elem).find('.c-listing-athlete__title .field__item').text().trim();
       const image_url = $(elem).find('.c-listing-athlete__thumbnail img').attr('src');
@@ -222,7 +224,7 @@ const scrapeAllFighters = async () => {
   try {
     const allFighterUrls = new Set();
 
-    for (let pageNumber = 0; pageNumber <= 277; pageNumber++) {
+    for (let pageNumber = 0; pageNumber <= 0; pageNumber++) {
       const fighterUrls = await scrapeFighterUrlsFromPage(pageNumber);
       fighterUrls.forEach(url => allFighterUrls.add(url));
       await new Promise(resolve => setTimeout(resolve, 10));
@@ -251,6 +253,7 @@ const scrapeAllFighters = async () => {
 
 export const POST = async (req, res) => {
   try {
+    console.log('Scraping all fighters...');  
     const allFighters = await scrapeAllFighters();
     res.status(200).json(allFighters);
   } catch (error) {
@@ -258,10 +261,3 @@ export const POST = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
-// Démarrer le scraping et insertion
-(async () => {
-  console.log('Starting to scrape fighter details');
-  const fightersDetails = await scrapeAllFighters();
-  console.log(`Scraped and inserted ${fightersDetails.length} fighters`);
-})();

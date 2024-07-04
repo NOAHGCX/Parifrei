@@ -46,7 +46,6 @@ async function fetchGraphQL(operationsDoc, operationName, variables) {
 
 async function executeInsertEvent(event) {
   const { event_name, date, location } = event;
-  console.log(`Inserting event: ${event_name}, Date: ${date}, Location: ${location}`);
   return fetchGraphQL(insertEventMutation, "InsertEvent", { event_name, date, location });
 }
 
@@ -55,7 +54,7 @@ function cleanText(text) {
 }
 
 function cleanFighterText(text) {
-    return text.replace(/\n/g, '-').replace(/\s+/g, '').trim();
+  return text.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim().replace(/\s-\s/g, ' - ').replace(/\s/g, '-');
 }
 
 async function executeInsertFight(fight) {
@@ -73,7 +72,6 @@ async function executeInsertFight(fight) {
     round: cleanText(round),
     time: cleanText(time)
   };
-  console.log(`Inserting fight for event ID ${event_id}:`, cleanedFight);
   return fetchGraphQL(insertFightMutation, "InsertFight", cleanedFight);
 }
 
@@ -89,8 +87,6 @@ const scrapeEventDetails = async (url) => {
     eventDetails.event_name = $('.b-content__title-highlight').text().trim();
     eventDetails.date = $('.b-list__box-list-item:first-child').text().trim().split(':')[1].trim();
     eventDetails.location = $('.b-list__box-list-item:nth-child(2)').text().trim().split(':')[1].trim();
-
-    console.log(`Scraped details for event: ${eventDetails.event_name}, Date: ${eventDetails.date}, Location: ${eventDetails.location}`);
 
     // Fight information
     eventDetails.fights = [];
@@ -134,9 +130,6 @@ const scrapeEventDetails = async (url) => {
       eventDetails.fights.push(fight);
     });
 
-    console.log(`Found ${eventDetails.fights.length} fights for event: ${eventDetails.event_name}`);
-    console.log(eventDetails.fights);
-
     return eventDetails;
   } catch (error) {
     console.error(`Error fetching details for URL ${url}:`, error);
@@ -147,49 +140,46 @@ const scrapeEventDetails = async (url) => {
 // Scrape the list of events and their details
 const scrapeAllEvents = async () => {
   try {
-    const response = await axios.get(completedEventsListUrl);
-    const $ = cheerio.load(response.data);
-
-    // Retrieve all links to event detail pages
-    const eventLinks = $('.b-link.b-link_style_black');
-    const eventUrls = [];
-    eventLinks.each((i, elem) => {
-      const url = $(elem).attr('href');
-      eventUrls.push(url);
-    });
-
-    console.log(`Found ${eventUrls.length} completed events.`);
-
-    // Add upcoming events
+    const completedResponse = await axios.get(completedEventsListUrl);
+    const $completed = cheerio.load(completedResponse.data);
     const upcomingResponse = await axios.get(upcomingEventsListUrl);
     const $upcoming = cheerio.load(upcomingResponse.data);
-    const upcomingEventLinks = $upcoming('.b-link.b-link_style_black');
-    upcomingEventLinks.each((i, elem) => {
-      const url = $(elem).attr('href');
-      eventUrls.push(url);
+
+    // Use a set to avoid duplicate URLs
+    const eventUrls = new Set();
+
+    // Completed events
+    $completed('.b-link.b-link_style_black').each((i, elem) => {
+      const url = $completed(elem).attr('href');
+      if (url) eventUrls.add(url);
     });
 
-    console.log(`Total events (completed + upcoming): ${eventUrls.length}`);
+    // Upcoming events
+    $upcoming('.b-link.b-link_style_black').each((i, elem) => {
+      const url = $upcoming(elem).attr('href');
+      if (url) eventUrls.add(url);
+    });
 
     // Scrape details of each event
     const allEventsDetails = [];
     for (const url of eventUrls) {
-      console.log(`Scraping details for event URL: ${url}`);
       const details = await scrapeEventDetails(url);
       if (details) {
-        console.log('Event details scraped:', details);
         const { errors: eventErrors, data: eventData } = await executeInsertEvent(details);
         if (eventErrors) {
           console.error('Error inserting event:', eventErrors);
         } else {
           const eventId = eventData.insert_events_one.id;
-          console.log(`Event inserted with ID: ${eventId}`);
+          const fightSet = new Set();
           for (const fight of details.fights) {
-            const fightDetails = { ...fight, event_id: eventId };
-            console.log('Fight details to insert:', fightDetails);
-            const { errors: fightErrors } = await executeInsertFight(fightDetails);
-            if (fightErrors) {
-              console.error('Error inserting fight:', fightErrors);
+            const fightIdentifier = `${fight.fighter}-${fight.method}-${fight.round}-${fight.time}`;
+            if (!fightSet.has(fightIdentifier)) {
+              fightSet.add(fightIdentifier);
+              const fightDetails = { ...fight, event_id: eventId };
+              const { errors: fightErrors } = await executeInsertFight(fightDetails);
+              if (fightErrors) {
+                console.error('Error inserting fight:', fightErrors);
+              }
             }
           }
           allEventsDetails.push(details);
@@ -198,8 +188,6 @@ const scrapeAllEvents = async () => {
       // Wait 1 second between requests to avoid overloading the server
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
-
-    console.log('Scraping and insertion completed successfully.');
 
     return allEventsDetails;
   } catch (error) {
@@ -211,7 +199,6 @@ const scrapeAllEvents = async () => {
 // API function to trigger the event scraping
 export const POST = async (request) => {
   try {
-    console.log('Starting event scraping process...');
     const eventsDetails = await scrapeAllEvents();
     return new Response(JSON.stringify({ success: true, data: eventsDetails }), {
       status: 200,
@@ -225,10 +212,3 @@ export const POST = async (request) => {
     });
   }
 };
-
-// Start scraping and inserting
-(async () => {
-  console.log('Initiating scraping of all events...');
-  const fightersDetails = await scrapeAllEvents();
-  console.log('All events scraping process finished.');
-})();
