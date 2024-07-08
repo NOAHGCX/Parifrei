@@ -2,9 +2,14 @@
 import Layout from "../../astro/layouts/Layout.astro";
 import Card from "../../components/Card.astro";
 import "../../styles/global.css";
-import Exemple from "../../react/components/Exemple";
+import UpcomingEvents from "../../react/components/Events/Events";
+import { ApolloProvider } from '@apollo/client';
+import { client } from '../../react/helpers/apollo';
 ---
 
 <Layout title="Prochains événements">
-  <h1>Prochains événements</h1>
+  <ApolloProvider client={client}>
+    <UpcomingEvents />
+  </ApolloProvider>
 </Layout>
+
