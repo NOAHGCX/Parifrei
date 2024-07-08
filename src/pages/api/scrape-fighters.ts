@@ -91,9 +91,7 @@ const scrapeFighterUrlsFromPage = async (pageNumber) => {
     $('.c-listing-athlete-flipcard__inner').each((i, elem) => {
       const profilePath = $(elem).find('.c-listing-athlete-flipcard__action a').attr('href');
       const name = $(elem).find('.c-listing-athlete__name').first().text().trim();
-      console.log(name);
       const nickname = $(elem).find('.c-listing-athlete__nickname .field__item').first().text().trim();
-      console.log(nickname);
       const record = $(elem).find('.c-listing-athlete__record').text().trim();
       const weight_class = $(elem).find('.c-listing-athlete__title .field__item').text().trim();
       const image_url = $(elem).find('.c-listing-athlete__thumbnail img').attr('src');
@@ -168,8 +166,11 @@ const scrapeFighterDetails = async (fighter) => {
 
     const targetStats = {};
     $('#e-stat-body_x5F__x5F_head-txt, #e-stat-body_x5F__x5F_body-txt, #e-stat-body_x5F__x5F_leg-txt').each((i, elem) => {
-      const targetKey = $(elem).find('text').first().text().trim().toLowerCase();
-      const targetValue = $(elem).find('text').last().text().trim().replace('%', '');
+
+      const targetKey = $(elem).find('text').last().text().trim().toLowerCase();
+    
+      const targetValue = $(elem).find('text').first().text().trim().replace('%', '');
+     
       targetStats[targetKey] = parseFloat(targetValue);
     });
 
@@ -224,7 +225,7 @@ const scrapeAllFighters = async () => {
   try {
     const allFighterUrls = new Set();
 
-    for (let pageNumber = 0; pageNumber <= 0; pageNumber++) {
+    for (let pageNumber = 0; pageNumber <= 277; pageNumber++) {
       const fighterUrls = await scrapeFighterUrlsFromPage(pageNumber);
       fighterUrls.forEach(url => allFighterUrls.add(url));
       await new Promise(resolve => setTimeout(resolve, 10));
