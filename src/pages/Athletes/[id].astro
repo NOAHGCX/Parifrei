@@ -8,6 +8,6 @@ const slug = Astro.url.pathname.split("/").at(-1);
 console.log(slug);
 ---
 
-<Layout title="Comparateur">
+<Layout title="Athlète">
   <Athlete id={slug} client:only />
 </Layout>

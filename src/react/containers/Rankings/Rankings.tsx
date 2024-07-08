@@ -89,7 +89,7 @@ const Rankings = ({ initialCategory }) => {
         .sort((a, b) => a.rank - b.rank);
 
       const titleHolders = (titleHolderData.tags || []).map(tag => ({
-        rank: undefined,
+        rank: tag.name.includes("Interim") ? "Champion Interim" : "Champion",
         ...tag.fighter,
         profile_image: tag.fighter.images[0]?.url,
         background_image: tag.fighter.background_images[0]?.url,
@@ -103,6 +103,8 @@ const Rankings = ({ initialCategory }) => {
         }
         return acc;
       }, []);
+
+      console.log(champion, interimChampion, filteredFighters);
 
       setFighters([champion, interimChampion, ...filteredFighters]);
     }

@@ -12,6 +12,7 @@ const CardAthlete = ({ fighter }) => {
 
   // Check background image
   let backgroundImage = fighter.background_images[0]?.url || '';
+  console.log(fighter)
 
   return (
     <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4">

@@ -150,7 +150,11 @@ const scrapeFighterDetails = async (fighter) => {
     $('.athlete-stats__stat').each((i, elem) => {
       const statName = $(elem).find('.athlete-stats__stat-text').text().trim();
       const statValue = $(elem).find('.athlete-stats__stat-numb').text().trim();
-      careerStats[statName.toLowerCase().replace(/\s+/g, '_')] = parseFloat(statValue.replace('%', '').replace(':', ''));
+      if (statName.toLowerCase().replace(/\s+/g, '_').replace('.', '').replace(':', '') === 'temps_de_combat_moyen') {
+        careerStats['temps_de_combat_moyen'] = statValue;
+      } else {
+        careerStats[statName.toLowerCase().replace(/\s+/g, '_').replace('.', '').replace(':', '')] = parseFloat(statValue.replace('%', '').replace(':', ''));
+      }
     });
 
     const statSections = ['.stats-records--two-column', '.stats-records--three-column', '.stats-records--compare'];
@@ -159,21 +163,43 @@ const scrapeFighterDetails = async (fighter) => {
         $(sectionElem).find('.c-overlap__stats, .c-stat-compare__group, .c-stat-3bar__group').each((j, statElem) => {
           const statKey = $(statElem).find('.c-overlap__stats-text, .c-stat-compare__label, .c-stat-3bar__label').text().trim();
           const statValue = $(statElem).find('.c-overlap__stats-value, .c-stat-compare__number, .c-stat-3bar__value').text().trim();
-          careerStats[statKey.toLowerCase().replace(/\s+/g, '_').replace('.', '').replace(':', '')] = parseFloat(statValue.replace('%', '').replace(':', ''));
+          if (statKey.toLowerCase().replace(/\s+/g, '_').replace('.', '').replace(':', '') === 'temps_de_combat_moyen') {
+            careerStats['temps_de_combat_moyen'] = statValue;
+          } else {
+            careerStats[statKey.toLowerCase().replace(/\s+/g, '_').replace('.', '').replace(':', '')] = parseFloat(statValue.replace('%', '').replace(':', ''));
+          }
         });
       });
     });
 
     const targetStats = {};
     $('#e-stat-body_x5F__x5F_head-txt, #e-stat-body_x5F__x5F_body-txt, #e-stat-body_x5F__x5F_leg-txt').each((i, elem) => {
-
       const targetKey = $(elem).find('text').last().text().trim().toLowerCase();
-    
       const targetValue = $(elem).find('text').first().text().trim().replace('%', '');
-     
       targetStats[targetKey] = parseFloat(targetValue);
     });
 
+    let avgFightTime = "NaN";
+    if (careerStats['temps_de_combat_moyen']) {
+      avgFightTime = careerStats['temps_de_combat_moyen'] || "NaN";
+    }
+
+    let permanentStrikes = 0;
+    let clinchStrikes = 0;
+    let groundStrikes = 0;
+    $('.c-stat-3bar__group').each((i, elem) => {
+      const label = $(elem).find('.c-stat-3bar__label').text().trim().toLowerCase();
+      const value = parseInt($(elem).find('.c-stat-3bar__value').text().split(' ')[0], 10);
+      if (label.includes('permanent')) {
+        permanentStrikes = value;
+      } else if (label.includes('clinch')) {
+        clinchStrikes = value;
+      } else if (label.includes('sol')) {
+        groundStrikes = value;
+      }
+    });
+
+    console.log(careerStats['temps_de_combat_moyen'])
     fighterDetails.career_statistics = [
       {
         sig_strikes_landed: careerStats['sig_str._a_atterri'] || 0,
@@ -187,10 +213,13 @@ const scrapeFighterDetails = async (fighter) => {
         sig_strike_defense: careerStats['sig_str.défense'] || 0,
         takedown_defense: careerStats['défense_de_démolition'] || 0,
         knockdown_avg: careerStats['knockdown_avg'] || 0,
-        avg_fight_time: careerStats['temps_de_combat_moyen'] ? convertTimeToSeconds(careerStats['temps_de_combat_moyen']) : 0,
+        avg_fight_time: avgFightTime, 
         sig_strike_target_head: targetStats['tête'] || 0,
         sig_strike_target_body: targetStats['corps'] || 0,
         sig_strike_target_leg: targetStats['jambe'] || 0,
+        sig_strike_position_permanent: permanentStrikes,
+        sig_strike_position_clinch: clinchStrikes,
+        sig_strike_position_sol: groundStrikes,
         ko_tko: careerStats['ko/tko'] || 0,
         decision: careerStats['dec'] || 0,
         submission: careerStats['sub'] || 0,

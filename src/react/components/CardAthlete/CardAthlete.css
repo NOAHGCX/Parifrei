@@ -39,7 +39,7 @@
     background-color: #333;
     color: white;
     transform: rotateY(180deg);
-    background-size: cont*ain;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     border-radius: 10px;

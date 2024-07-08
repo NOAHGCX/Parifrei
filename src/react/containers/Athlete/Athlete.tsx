@@ -20,21 +20,27 @@ const GET_ATHLETE_DETAILS = gql`
       weight
       octagon_debut
       career_statistics {
-        sig_strikes_landed
-        sig_strikes_attempted
-        takedowns_attempted
-        sig_strikes_per_minute
+       sig_strikes_landed 
+       sig_strikes_attempted 
+       takedowns_landed 
+       takedowns_attempted
+       sig_strikes_per_minute
         sig_strikes_absorbed_per_minute
         submission_avg_per_15_min
+        takedown_avg_per_15_min
         sig_strike_defense
         takedown_defense
         knockdown_avg
-        sig_strike_target_head
         sig_strike_target_body
         sig_strike_target_leg
+        sig_strike_target_head
+        sig_strike_position_clinch
+        sig_strike_position_sol
+        sig_strike_position_permanent
         ko_tko
         decision
         submission
+        avg_fight_time
       }
       images {
         url
@@ -73,7 +79,7 @@ const Athlete = ({ id }) => {
   } = data.fighter;
 
   return (
-    <div className="athlete-container container mx-auto p-4">
+    <div className="athlete-container mx-auto p-4">
       <AthleteHeader 
         name={name}
         nickname={nickname}

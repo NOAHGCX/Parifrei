@@ -10,41 +10,37 @@
     background-color: #2c2c2e;
     padding: 20px;
     border-radius: 8px;
-    text-align: center;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
   }
   
   .athlete-header .z-10 {
     z-index: 10;
   }
   
-  .athlete-statistics {
-    background-color: #2c2c2e;
-    padding: 20px;
-    border-radius: 8px;
-    margin-top: 20px;
+  
+  
+  .profile-image-container img {
+    width: 330px; /* Assuming the original image is 330px wide */
+    height: 329px;
+    object-fit: cover;
+    object-position: top left;
   }
   
-  .athlete-bio {
-    background-color: #2c2c2e;
-    padding: 20px;
-    border-radius: 8px;
-    margin-top: 20px;
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
   }
   
-  .stat-card {
-    background-color: #3c3c3e;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-  }
-  
-  .stat-card h3 {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-  }
-  
-  .stat-card p {
-    font-size: 1em;
-    margin: 5px 0;
+  .tags span {
+    background-color: #ff5c5c;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-size: 0.875rem;
   }
   
