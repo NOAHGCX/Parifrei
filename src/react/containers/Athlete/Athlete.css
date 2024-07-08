@@ -1,0 +1,50 @@
+.athlete-container {
+    background-color: #1c1c1e;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .athlete-header {
+    position: relative;
+    background-color: #2c2c2e;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .athlete-header .z-10 {
+    z-index: 10;
+  }
+  
+  .athlete-statistics {
+    background-color: #2c2c2e;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  
+  .athlete-bio {
+    background-color: #2c2c2e;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  
+  .stat-card {
+    background-color: #3c3c3e;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .stat-card h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  
+  .stat-card p {
+    font-size: 1em;
+    margin: 5px 0;
+  }
+  
