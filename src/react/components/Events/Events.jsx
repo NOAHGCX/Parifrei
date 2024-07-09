@@ -187,12 +187,14 @@ const UpcomingEvents = () => {
       <div className="flex flex-wrap justify-center">
         {currentEvents.map(event => (
           <a href={`/Prochains-evenements/${event.id}`} key={event.id}>
-            <div className="bg-white rounded-lg shadow-lg m-6 max-w-xs transition-transform transform hover:-translate-y-1">
+            <div className="bg-white rounded-lg shadow-lg m-6 max-w-xs w-full transition-transform transform hover:-translate-y-1" style={{ height: '350px' }}>
               <img src="https://www.sportsnet.ca/wp-content/uploads/2024/01/UFC_FightNight_16x9.png" alt={event.event_name} className="w-full h-48 object-cover rounded-t-lg" />
-              <div className="p-4">
-                <h2 className="text-xl font-semibold mb-2">{event.event_name}</h2>
-                <p className="text-gray-600 mb-1">{event.date}</p>
-                <p className="text-gray-600">{event.location}</p>
+              <div className="p-4 flex flex-col justify-between h-full">
+                <div>
+                  <h2 className="text-xl font-semibold mb-2">{event.event_name}</h2>
+                  <p className="text-gray-600 mb-1">{event.date}</p>
+                  <p className="text-gray-600">{event.location}</p>
+                </div>
               </div>
             </div>
           </a>
