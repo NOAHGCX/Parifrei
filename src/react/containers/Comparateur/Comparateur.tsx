@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SearchBarFighter from '../../components/SearchBarFighter';
 import AthleteStatisticsDuo from '../../components/AthleteStatisticsDuo';
+import FighterImage from '../../components/FighterImage';
 
 const CompareFighters = () => {
   const [fighter1, setFighter1] = useState(null);
@@ -17,10 +18,32 @@ const CompareFighters = () => {
       <div className="flex flex-col md:flex-row items-center justify-center gap-2">
         <SearchBarFighter onFighterSelect={setFighter1} />
         <div className="text-2xl font-bold">VS</div>
-        <SearchBarFighter onFighterSelect={setFighter2} />
+      <SearchBarFighter onFighterSelect={setFighter2} />
       </div>
+      <div className="flex justify-around items-center w-full mt-6 ">
+        {fighter1 && (
+          <div className="flex flex-col items-center">
+            <FighterImage fighter={fighter1} className="rounded-lg shadow-md" />
+          </div>
+        )}
+        {fighter2 && (
+          <div className="flex flex-col items-center">
+            <FighterImage fighter={fighter2} className="rounded-lg shadow-md" />
+          </div>
+        )}
+      </div>
+      {fighter2 && (
+          <button className="bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold py-2 px-4 rounded-lg mt-4">
+            Prédire le combat
+          </button>
+        )}
       <div className="w-full mt-6">
-        <AthleteStatisticsDuo stats1={fighter1?.career_statistics[0]} stats2={fighter2?.career_statistics[0]} name1={fighter1?.name}  name2={fighter2?.name}/>
+        <AthleteStatisticsDuo 
+          stats1={fighter1?.career_statistics[0]} 
+          stats2={fighter2?.career_statistics[0]} 
+          name1={fighter1?.name}  
+          name2={fighter2?.name}
+        />
       </div>
     </div>
   );
