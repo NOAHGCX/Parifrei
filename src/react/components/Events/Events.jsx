@@ -1,13 +1,14 @@
 // components/UpcomingEvents.jsx
 
 import React from 'react';
-import { gql } from '@apollo/client';
+import { useEffect } from 'react';
+import {gql} from '@apollo/client';
 import { useAstroQuery } from '../../helpers/apollo';
 
 const GET_UPCOMING_EVENTS = gql`
   query GetUpcomingEvents {
     events(
-      where: { date: { _gte: "2024-07-09" } }
+      where: { date: { _gte: "2024-09-27" } }
       orderBy: { date: asc }
     ) {
       id
@@ -21,8 +22,30 @@ const GET_UPCOMING_EVENTS = gql`
 const UpcomingEvents = () => {
   const { loading, error, data } = useAstroQuery(GET_UPCOMING_EVENTS);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  useEffect(() => {
+    if (loading) {
+      console.log('Loading...');
+    }
+    if (error) {
+      console.error('Error:', error.message);
+    }
+    if (data) {
+      console.log('Data:', data);
+    }
+  }, [loading, error, data]);
+
+  if (loading) {
+    console.log('Loading...');
+  }
+
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error: {error.message}</p>;
+
+  // return (
+  //   <p>{events.date}</p>
+  // );
+
+  if (!data || !data.events || data.events.length === 0) return <p>Aucun événement à afficher.</p>;
 
   return (
     <div className="py-8 bg-gray-100">
