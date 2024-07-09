@@ -25,36 +25,36 @@ const UpcomingEvents = () => {
         "https://dmxg5wxfqgb4u.cloudfront.net/styles/event_results_athlete_headshot/s3/2023-05/MUHAMMAD_BELAL_05-06.png?itok=kXjdOJ-D"
       ]
     },
-    {
-        id: 3,
-        title: "UFC 304: Edwards vs. Muhammad 2",
-        date: "July 27, 2024",
-        location: "Manchester, England, United Kingdom",
-        imageUrls: [
-          "https://dmxg5wxfqgb4u.cloudfront.net/styles/event_results_athlete_headshot/s3/2023-12/EDWARDS_LEON_BELT_12-16.png?itok=PybcZaCp",
-          "https://dmxg5wxfqgb4u.cloudfront.net/styles/event_results_athlete_headshot/s3/2023-05/MUHAMMAD_BELAL_05-06.png?itok=kXjdOJ-D"
-        ]
-      },
-      {
-        id: 4,
-        title: "UFC 304: Edwards vs. Muhammad 2",
-        date: "July 27, 2024",
-        location: "Manchester, England, United Kingdom",
-        imageUrls: [
-          "https://dmxg5wxfqgb4u.cloudfront.net/styles/event_results_athlete_headshot/s3/2023-12/EDWARDS_LEON_BELT_12-16.png?itok=PybcZaCp",
-          "https://dmxg5wxfqgb4u.cloudfront.net/styles/event_results_athlete_headshot/s3/2023-05/MUHAMMAD_BELAL_05-06.png?itok=kXjdOJ-D"
-        ]
-      },
-      {
-        id: 5,
-        title: "UFC 304: Edwards vs. Muhammad 2",
-        date: "July 27, 2024",
-        location: "Manchester, England, United Kingdom",
-        imageUrls: [
-          "https://dmxg5wxfqgb4u.cloudfront.net/styles/event_results_athlete_headshot/s3/2023-12/EDWARDS_LEON_BELT_12-16.png?itok=PybcZaCp",
-          "https://dmxg5wxfqgb4u.cloudfront.net/styles/event_results_athlete_headshot/s3/2023-05/MUHAMMAD_BELAL_05-06.png?itok=kXjdOJ-D"
-        ]
-      },
+    // {
+    //     id: 3,
+    //     title: "UFC 304: Edwards vs. Muhammad 2",
+    //     date: "July 27, 2024",
+    //     location: "Manchester, England, United Kingdom",
+    //     imageUrls: [
+    //       "https://dmxg5wxfqgb4u.cloudfront.net/styles/event_results_athlete_headshot/s3/2023-12/EDWARDS_LEON_BELT_12-16.png?itok=PybcZaCp",
+    //       "https://dmxg5wxfqgb4u.cloudfront.net/styles/event_results_athlete_headshot/s3/2023-05/MUHAMMAD_BELAL_05-06.png?itok=kXjdOJ-D"
+    //     ]
+    //   },
+    //   {
+    //     id: 4,
+    //     title: "UFC 304: Edwards vs. Muhammad 2",
+    //     date: "July 27, 2024",
+    //     location: "Manchester, England, United Kingdom",
+    //     imageUrls: [
+    //       "https://dmxg5wxfqgb4u.cloudfront.net/styles/event_results_athlete_headshot/s3/2023-12/EDWARDS_LEON_BELT_12-16.png?itok=PybcZaCp",
+    //       "https://dmxg5wxfqgb4u.cloudfront.net/styles/event_results_athlete_headshot/s3/2023-05/MUHAMMAD_BELAL_05-06.png?itok=kXjdOJ-D"
+    //     ]
+    //   },
+    //   {
+    //     id: 5,
+    //     title: "UFC 304: Edwards vs. Muhammad 2",
+    //     date: "July 27, 2024",
+    //     location: "Manchester, England, United Kingdom",
+    //     imageUrls: [
+    //       "https://dmxg5wxfqgb4u.cloudfront.net/styles/event_results_athlete_headshot/s3/2023-12/EDWARDS_LEON_BELT_12-16.png?itok=PybcZaCp",
+    //       "https://dmxg5wxfqgb4u.cloudfront.net/styles/event_results_athlete_headshot/s3/2023-05/MUHAMMAD_BELAL_05-06.png?itok=kXjdOJ-D"
+    //     ]
+    //   },
     // Ajoutez plus d'événements ici
   ];
 
