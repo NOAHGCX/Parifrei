@@ -4,8 +4,10 @@ import { GET_EVENTS } from '../../schema/events';
 const EventsList = ({ eventName = "%", location = "%", offset = 0, limit = 10 }) => {
   const { loading, error, data } = useAstroQuery(GET_EVENTS, {
     variables: {
-      offset, 
-      limit 
+      eventName,
+      location,
+      offset,
+      limit
     },
   });
 

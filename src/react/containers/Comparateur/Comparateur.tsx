@@ -10,6 +10,7 @@ useEffect(() => {
   console.log('fighter1', fighter1);
   console.log('fighter2', fighter2);
 }, [fighter1, fighter2]);
+
   return (
     <div>
       <h1 className="text-center">Comparaison des combattants</h1>
