@@ -3,9 +3,11 @@ import Layout from "../../astro/layouts/Layout.astro";
 import Card from "../../components/Card.astro";
 import "../../styles/global.css";
 import Exemple from "../../react/components/Exemple";
-import Athletes from "../../react/containers/Athletes";
+import Athlete from "../../react/containers/Athlete";
+const slug = Astro.url.pathname.split("/").at(-1);
+console.log(slug);
 ---
 
-<Layout title="Athlètes">
-  <Athletes initialCategory={"Lightweight"} client:only />
+<Layout title="Athlète">
+  <Athlete id={slug} client:only />
 </Layout>

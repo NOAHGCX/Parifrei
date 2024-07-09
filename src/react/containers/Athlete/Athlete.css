@@ -1,0 +1,46 @@
+.athlete-container {
+    background-color: #1c1c1e;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .athlete-header {
+    position: relative;
+    background-color: #2c2c2e;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .athlete-header .z-10 {
+    z-index: 10;
+  }
+  
+  
+  
+  .profile-image-container img {
+    width: 330px; /* Assuming the original image is 330px wide */
+    height: 329px;
+    object-fit: cover;
+    object-position: top left;
+  }
+  
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .tags span {
+    background-color: #ff5c5c;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-size: 0.875rem;
+  }
+  

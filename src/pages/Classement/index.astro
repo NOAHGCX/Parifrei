@@ -3,9 +3,9 @@ import Layout from "../../astro/layouts/Layout.astro";
 import Card from "../../components/Card.astro";
 import "../../styles/global.css";
 import Exemple from "../../react/components/Exemple";
-import Rankings from "../../react/components/Rankings";
+import Rankings from "../../react/containers/Rankings";
 ---
 
 <Layout title="Comparateur">
-  <Rankings initialCategory={"Test"} client:only />
+  <Rankings initialCategory={"Lightweight"} client:only />
 </Layout>

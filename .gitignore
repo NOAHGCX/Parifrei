@@ -26,6 +26,4 @@ pnpm-debug.log*
 # hasura
 hasura/
 docker/
-
-package-lock.json
-package.json
+docker/postgres/

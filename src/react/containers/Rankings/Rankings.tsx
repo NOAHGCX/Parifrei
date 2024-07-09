@@ -76,7 +76,6 @@ const Rankings = ({ initialCategory }) => {
 
   useEffect(() => {
     if (rankingData && titleHolderData) {
-      console.log(rankingData, titleHolderData);
       const filteredFighters = (rankingData.tags || [])
         .filter(tag => tag.name.includes(category))
         .map(tag => ({
@@ -89,7 +88,7 @@ const Rankings = ({ initialCategory }) => {
         .sort((a, b) => a.rank - b.rank);
 
       const titleHolders = (titleHolderData.tags || []).map(tag => ({
-        rank: undefined,
+        rank: tag.name.includes("Interim") ? "Champion Interim" : "Champion",
         ...tag.fighter,
         profile_image: tag.fighter.images[0]?.url,
         background_image: tag.fighter.background_images[0]?.url,
@@ -103,6 +102,7 @@ const Rankings = ({ initialCategory }) => {
         }
         return acc;
       }, []);
+
 
       setFighters([champion, interimChampion, ...filteredFighters]);
     }
@@ -138,4 +138,3 @@ const Rankings = ({ initialCategory }) => {
 };
 
 export default Rankings;
-
