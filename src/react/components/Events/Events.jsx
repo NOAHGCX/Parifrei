@@ -1,20 +1,15 @@
-// components/UpcomingEvents.tsx
+// components/UpcomingEvents.jsx
 
 import React from 'react';
-import pkg from '@apollo/client';
-const { ApolloClient, InMemoryCache, gql, useQuery } = pkg;
+import { useEffect } from 'react';
+import {gql} from '@apollo/client';
+import { useAstroQuery } from '../../helpers/apollo';
 
-const client = new ApolloClient({
-  uri: 'http://localhost:8080/v1/graphql', // Assurez-vous que le chemin correspond à votre configuration Astro
-  cache: new InMemoryCache(),
-});
-
-// Définition de la requête GraphQL
 const GET_UPCOMING_EVENTS = gql`
   query GetUpcomingEvents {
     events(
-      where: { date: { _gte: "2024-07-09" } },
-      orderBy: { date: asc }
+      where: { date: { _gte: "2024-05-01" } }
+      order_by: { date: asc }
     ) {
       id
       event_name
@@ -24,27 +19,39 @@ const GET_UPCOMING_EVENTS = gql`
   }
 `;
 
-interface Event {
-  id: number;
-  event_name: string;
-  date: string;
-  location: string;
-}
+const UpcomingEvents = () => {
+  const { loading, error, data } = useAstroQuery(GET_UPCOMING_EVENTS);
 
-const UpcomingEvents: React.FC = () => {
-  const { loading, error, data } = useQuery<{ events: Event[] }>(GET_UPCOMING_EVENTS, {
-    client,
-  });
-  console.log(data);
+  useEffect(() => {
+    if (loading) {
+      console.log('Loading...');
+    }
+    if (error) {
+      console.error('Error:', error.message);
+    }
+    if (data) {
+      console.log('Data:', data);
+    }
+  }, [loading, error, data]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (loading) {
+    console.log('Loading...');
+  }
+
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error: {error.message}</p>;
+
+  // return (
+  //   <p>{events.date}</p>
+  // );
+
+  if (!data || !data.events || data.events.length === 0) return <p>Aucun événement à afficher.</p>;
 
   return (
     <div className="py-8 bg-gray-100">
       <h1 className="text-4xl font-bold text-center mb-8">Prochains événements</h1>
       <div className="flex flex-wrap justify-center">
-        {data?.events.map(event => (
+        {data.events.map(event => (
           <div key={event.id} className="bg-white rounded-lg shadow-lg m-4 max-w-xs transition-transform transform hover:-translate-y-1">
             {/* Exemple d'image */}
             <img src="https://via.placeholder.com/400x225" alt={event.event_name} className="w-full h-48 object-cover rounded-t-lg" />
@@ -61,4 +68,3 @@ const UpcomingEvents: React.FC = () => {
 };
 
 export default UpcomingEvents;
-

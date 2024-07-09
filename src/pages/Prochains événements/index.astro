@@ -3,9 +3,10 @@ import Layout from "../../astro/layouts/Layout.astro";
 import Card from "../../components/Card.astro";
 import "../../styles/global.css";
 import Exemple from "../../react/components/Exemple";
-import Events from "../../react/containers/Events";
+import Events from "../../react/components/Events/Events";
 ---
 
 <Layout title="Prochains événements">
-  <Events client:only />
+  <Events client:only="react" />
 </Layout>
+

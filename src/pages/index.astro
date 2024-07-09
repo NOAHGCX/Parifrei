@@ -2,50 +2,46 @@
 import Layout from "../astro/layouts/Layout.astro";
 import Card from "../components/Card.astro";
 import "../styles/global.css";
+import "../styles/home.css";
 import Exemple from "../react/components/Exemple";
 ---
 
 <Layout title="Home">
-  <h1>Notre projet</h1>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sit amet est efficitur est scelerisque bibendum sit amet vel ex. Nullam sed nulla tempus nunc efficitur tempus. Suspendisse auctor lacus a mauris finibus, ut cursus ipsum iaculis. Cras sed condimentum risus. Praesent nec gravida diam. Sed semper ante ipsum, ac cursus metus dapibus sed. Ut consectetur urna eu erat varius hendrerit. Curabitur sit amet velit et risus pulvinar sodales sed ut quam. Vivamus posuere efficitur metus quis pulvinar. Maecenas ultricies non nisl congue pellentesque. Praesent tristique tellus eu erat </p>
-  <h1>D'où viennent nos données ?</h1>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sit amet est efficitur est scelerisque bibendum sit amet vel ex. Nullam sed nulla tempus nunc efficitur tempus. Suspendisse auctor lacus a mauris finibus, ut cursus ipsum iaculis. Cras sed 
-    Maecenas ultricies non nisl congue pellentesque. Praesent tristique tellus eu erat sodales dictum. Morbi sapien metus, viverra nec lacus non, venenatis condimentum massa. Morbi nunc arcu, efficitur sed gravida in, faucibus porttitor tortor. In lobortis ante sit amet condimentum cursus. Curabitur condimentum blandit viverra. Donec dignissim augue non orci scelerisque dignissim.</p>
-  <h1>Comment utiliser notre site</h1>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sit amet est efficitur est scelerisque bibendum sit amet vel ex. Nullam sed nulla tempus nunc efficitur tempus. Suspendisse auctor lacus a mauris finibus, ut cursus ipsum iaculis. Cras sed condimentum risus. Praesent nec gravida diam. Sed semper ante ipsum, ac cursus metus d sapien metus, viverra nec lacus non, venenatis condimentum massa. Morbi nunc arcu, efficitur sed gravida in, faucibus porttitor tortor. In lobortis ante sit amet condimentum cursus. Curabitur condimentum blandit viverra. Donec dignissim augue non orci scelerisque dignissim.</p>
-  <!-- <div class="bg-white">
-    <div class="mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
-      <div>
-        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Technical Specifications</h2>
-        <p class="mt-4 text-gray-500">The walnut wood card tray is precision milled to perfectly fit a stack of Focus cards. The powder coated steel divider separates active cards from new ones, or can be used to archive important task lists.</p>
-  
-        <dl class="mt-16 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:gap-x-8">
-          <div class="border-t border-gray-200 pt-4">
-            <dt class="font-medium text-gray-900">Origin</dt>
-            <dd class="mt-2 text-sm text-gray-500">Designed by Good Goods, Inc.</dd>
-          </div>
-          <div class="border-t border-gray-200 pt-4">
-            <dt class="font-medium text-gray-900">Material</dt>
-            <dd class="mt-2 text-sm text-gray-500">Solid walnut base with rare earth magnets and powder coated steel card cover</dd>
-          </div>
-          <div class="border-t border-gray-200 pt-4">
-            <dt class="font-medium text-gray-900">Dimensions</dt>
-            <dd class="mt-2 text-sm text-gray-500">6.25&quot; x 3.55&quot; x 1.15&quot;</dd>
-          </div>
-          <div class="border-t border-gray-200 pt-4">
-            <dt class="font-medium text-gray-900">Finish</dt>
-            <dd class="mt-2 text-sm text-gray-500">Hand sanded and finished with natural oil</dd>
-          </div>
-          <div class="border-t border-gray-200 pt-4">
-            <dt class="font-medium text-gray-900">Includes</dt>
-            <dd class="mt-2 text-sm text-gray-500">Wood card tray and 3 refill packs</dd>
-          </div>
-          <div class="border-t border-gray-200 pt-4">
-            <dt class="font-medium text-gray-900">Considerations</dt>
-            <dd class="mt-2 text-sm text-gray-500">Made from natural materials. Grain and color vary with each item.</dd>
-          </div>
-        </dl>
+  <!-- Section Héroïque -->
+  <section class="hero">
+    <div class="container">
+      <img src="/home_left.png" alt="Left Image" class="hero-image left-image" />
+      <div class="hero-content">
+        <h1>Transformez vos paris sur le MMA grâce à l'intelligence artificielle</h1>
+        <p>PariFree combine analyse approfondie, prédiction par machine learning et meilleures cotes pour maximiser vos gains.</p>
+        <a href="/Comparateur" class="cta-button">Découvrez notre solution</a>
       </div>
+      <img src="/home_right.png" alt="Right Image" class="hero-image right-image" />
     </div>
-  </div> -->
+  </section>
+
+  <!-- Section Fonctionnalités -->
+  <section class="features">
+    <div class="container">
+      <h2>Fonctionnalités Clés de PariFree</h2>
+      <ul>
+        <li>
+          <h3>Analyses Approfondies</h3>
+          <p>Accédez à des analyses détaillées et pertinentes pour chaque match de MMA, fournies par nos experts en utilisant les dernières technologies de data science et d'analyse prédictive. </p>
+        </li>
+        <li>
+          <h3>Modèle Prédictif Avancé</h3>
+          <p>Notre algorithme analyse en continu les performances passées et actuelles des combattants pour vous fournir des prédictions précises et fiables.</p>
+        </li>
+        <li>
+          <h3>Calendrier des Événements</h3>
+          <p>Ne manquez aucun combat grâce à notre calendrier complet des événements MMA.</p>
+        </li>
+      </ul>
+    </div>
+    
+  </section>
+
+  
+
 </Layout>
