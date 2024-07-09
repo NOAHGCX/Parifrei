@@ -85,7 +85,7 @@ const SearchBar = ({ onFighterSelect }) => {
   }, []);
 
   return (
-    <div ref={searchBarRef} className="search-bar mt-6 p-4 rounded-lg relative">
+    <div ref={searchBarRef} className="search-bar  p-4 rounded-lg relative">
       <input
         type="text"
         className="w-[350px] p-2 text-lg rounded bg-gray-100 text-black placeholder-gray-400"
