@@ -89,7 +89,7 @@ const SearchBar = ({ onFighterSelect }) => {
       <input
         type="text"
         className="w-[350px] p-2 text-lg rounded bg-gray-100 text-black placeholder-gray-400"
-        placeholder="Search fighters..."
+        placeholder="Trouver un combattant"
         value={query}
         onChange={handleSearch}
       />

@@ -15,11 +15,11 @@ const getTodayDate = () => {
 
 const todayDate = getTodayDate();
 
-const GET_UPCOMING_EVENTS = gql`
-  query GetUpcomingEvents {
+const GET_EVENTS = gql`
+  query GetEvents($filter: events_bool_exp!, $order: [events_order_by!]) {
     events(
-      where: { date: { _gte: "${todayDate}" } }
-      order_by: { date: asc }
+      where: $filter,
+      order_by: $order
     ) {
       id
       event_name
@@ -30,9 +30,26 @@ const GET_UPCOMING_EVENTS = gql`
 `;
 
 const UpcomingEvents = () => {
-  const { loading, error, data } = useAstroQuery(GET_UPCOMING_EVENTS);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showUpcoming, setShowUpcoming] = useState(true);
   const eventsPerPage = 8;
+
+  const filter = showUpcoming
+    ? { date: { _gte: todayDate } }
+    : { date: { _lte: todayDate } };
+
+  const order = showUpcoming
+    ? { date: 'asc' }
+    : { date: 'desc' };
+
+  const { loading, error, data, refetch } = useAstroQuery(GET_EVENTS, {
+    variables: { filter, order },
+  });
+
+  useEffect(() => {
+    refetch();
+  }, [showUpcoming, refetch]);
 
   useEffect(() => {
     if (loading) {
@@ -53,21 +70,120 @@ const UpcomingEvents = () => {
   // Pagination logic
   const indexOfLastEvent = currentPage * eventsPerPage;
   const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
-  const currentEvents = data?.events.slice(indexOfFirstEvent, indexOfLastEvent);
+
+  // Filter events based on search term
+  const filteredEvents = data?.events.filter(event =>
+    event.event_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const currentEvents = filteredEvents?.slice(indexOfFirstEvent, indexOfLastEvent);
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   if (!data || !data.events || data.events.length === 0) return <p>Aucun événement à afficher.</p>;
 
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(data.events.length / eventsPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  const totalEvents = filteredEvents.length;
+  const totalPages = Math.ceil(totalEvents / eventsPerPage);
+
+  const renderPageNumbers = () => {
+    if (totalPages <= 1) return null;
+
+    const pageNumbers = [];
+
+    if (currentPage > 1) {
+      pageNumbers.push(
+        <button
+          key="prev"
+          onClick={() => paginate(currentPage - 1)}
+          className="mx-2 text-blue-500 hover:text-blue-700"
+        >
+          Previous
+        </button>
+      );
+    }
+
+    pageNumbers.push(
+      <button
+        key={1}
+        onClick={() => paginate(1)}
+        className={`mx-2 ${currentPage === 1 ? 'font-bold' : ''} text-blue-500 hover:text-blue-700`}
+      >
+        1
+      </button>
+    );
+
+    if (currentPage > 3) {
+      pageNumbers.push(<span key="dots1" className="mx-2">...</span>);
+    }
+
+    if (currentPage > 2 && currentPage < totalPages - 1) {
+      pageNumbers.push(
+        <button
+          key={currentPage}
+          onClick={() => paginate(currentPage)}
+          className="mx-2 font-bold text-blue-500 hover:text-blue-700"
+        >
+          {currentPage}
+        </button>
+      );
+    }
+
+    if (currentPage < totalPages - 2) {
+      pageNumbers.push(<span key="dots2" className="mx-2">...</span>);
+    }
+
+    pageNumbers.push(
+      <button
+        key={totalPages}
+        onClick={() => paginate(totalPages)}
+        className={`mx-2 ${currentPage === totalPages ? 'font-bold' : ''} text-blue-500 hover:text-blue-700`}
+      >
+        {totalPages}
+      </button>
+    );
+
+    if (currentPage < totalPages) {
+      pageNumbers.push(
+        <button
+          key="next"
+          onClick={() => paginate(currentPage + 1)}
+          className="mx-2 text-blue-500 hover:text-blue-700"
+        >
+          Next
+        </button>
+      );
+    }
+
+    return pageNumbers;
+  };
 
   return (
     <div>
-      <h1 className="text-4xl font-bold text-center mb-8">Prochains événements</h1>
+      <h1 className="text-4xl font-bold text-center mb-8">Événements</h1>
+      <div className="flex justify-center mb-4">
+        <button
+          onClick={() => setShowUpcoming(true)}
+          className={`px-4 py-2 mx-2 ${showUpcoming ? 'bg-gray-800 text-white' : 'bg-gray-200'}`}
+        >
+          Prochains événements
+        </button>
+        <button
+          onClick={() => setShowUpcoming(false)}
+          className={`px-4 py-2 mx-2 ${!showUpcoming ? 'bg-gray-800 text-white' : 'bg-gray-200'}`}
+        >
+          Événements passés
+        </button>
+      </div>
+      <div className="flex justify-center mb-8">
+        <input
+          type="text"
+          placeholder="Rechercher des événements"
+          className="border rounded p-2 w-1/3"
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+        />
+      </div>
       <div className="flex flex-wrap justify-center">
         {currentEvents.map(event => (
           <a href={`/Prochains-evenements/${event.id}`} key={event.id}>
@@ -85,13 +201,7 @@ const UpcomingEvents = () => {
       <div className="flex justify-center mt-8">
         <nav>
           <ul className="flex list-none">
-            {pageNumbers.map(number => (
-              <li key={number} className={`mx-2 ${currentPage === number ? 'font-bold' : ''}`}>
-                <button onClick={() => paginate(number)} className="text-blue-500 hover:text-blue-700">
-                  {number}
-                </button>
-              </li>
-            ))}
+            {renderPageNumbers()}
           </ul>
         </nav>
       </div>

@@ -39,7 +39,7 @@ const CompareFighters = () => {
       </div>
       {fighter1 && fighter2 && (
         <button
-          className="bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold py-2 px-4 rounded-lg mt-4"
+          className="bg-gray-800 hover:bg-blue-600 text-white text-lg font-semibold py-2 px-4 rounded-lg mt-4"
           onClick={handlePredictFight}
         >
           Prédire le combat

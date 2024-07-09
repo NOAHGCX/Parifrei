@@ -150,7 +150,7 @@ const AthletesListContent = () => {
         pages.push(
           <button
             key={i}
-            className={`border rounded p-2 mx-1 ${i === currentPage ? 'bg-blue-500 text-white' : ''}`}
+            className={`border rounded p-2 mx-1 ${i === currentPage ? 'bg-gray-800 text-white' : ''}`}
             onClick={() => {
               setPage(i - 1);
               queryRef.current.getRefetch();
@@ -183,7 +183,7 @@ const AthletesListContent = () => {
           <input
             type="text"
             className="border rounded p-2 w-1/3"
-            placeholder="Search by name"
+            placeholder="Trouver un combattant"
             onChange={(e) => handleSearchChange(e.target.value)}
           />
           <select
