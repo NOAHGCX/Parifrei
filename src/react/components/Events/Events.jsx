@@ -59,7 +59,7 @@ const UpcomingEvents = () => {
   if (!data || !data.events || data.events.length === 0) return <p>Aucun événement à afficher.</p>;
 
   return (
-    <div className="py-8 bg-gray-100 mx-4">
+    <div>
       <h1 className="text-4xl font-bold text-center mb-8">Prochains événements</h1>
       <div className="flex flex-wrap justify-center">
         {data.events.map(event => (
