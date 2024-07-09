@@ -1,7 +1,6 @@
 // components/UpcomingEvents.jsx
 
-import React from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { gql } from '@apollo/client';
 import { useAstroQuery } from '../../helpers/apollo';
 
@@ -32,6 +31,8 @@ const GET_UPCOMING_EVENTS = gql`
 
 const UpcomingEvents = () => {
   const { loading, error, data } = useAstroQuery(GET_UPCOMING_EVENTS);
+  const [currentPage, setCurrentPage] = useState(1);
+  const eventsPerPage = 8;
 
   useEffect(() => {
     if (loading) {
@@ -49,23 +50,28 @@ const UpcomingEvents = () => {
     console.log('Loading...');
   }
 
-  // if (loading) return <p>Loading...</p>;
-  // if (error) return <p>Error: {error.message}</p>;
+  // Pagination logic
+  const indexOfLastEvent = currentPage * eventsPerPage;
+  const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
+  const currentEvents = data?.events.slice(indexOfFirstEvent, indexOfLastEvent);
 
-  // return (
-  //   <p>{events.date}</p>
-  // );
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   if (!data || !data.events || data.events.length === 0) return <p>Aucun événement à afficher.</p>;
+
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(data.events.length / eventsPerPage); i++) {
+    pageNumbers.push(i);
+  }
 
   return (
     <div>
       <h1 className="text-4xl font-bold text-center mb-8">Prochains événements</h1>
       <div className="flex flex-wrap justify-center">
-        {data.events.map(event => (
-          <a href={`/Prochains-evenements/${event.id}`}>
-            <div key={event.id} className="bg-white rounded-lg shadow-lg m-6 max-w-xs transition-transform transform hover:-translate-y-1">
-              {/* Exemple d'image */}
+        {currentEvents.map(event => (
+          <a href={`/Prochains-evenements/${event.id}`} key={event.id}>
+            <div className="bg-white rounded-lg shadow-lg m-6 max-w-xs transition-transform transform hover:-translate-y-1">
               <img src="https://www.sportsnet.ca/wp-content/uploads/2024/01/UFC_FightNight_16x9.png" alt={event.event_name} className="w-full h-48 object-cover rounded-t-lg" />
               <div className="p-4">
                 <h2 className="text-xl font-semibold mb-2">{event.event_name}</h2>
@@ -75,6 +81,19 @@ const UpcomingEvents = () => {
             </div>
           </a>
         ))}
+      </div>
+      <div className="flex justify-center mt-8">
+        <nav>
+          <ul className="flex list-none">
+            {pageNumbers.map(number => (
+              <li key={number} className={`mx-2 ${currentPage === number ? 'font-bold' : ''}`}>
+                <button onClick={() => paginate(number)} className="text-blue-500 hover:text-blue-700">
+                  {number}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </div>
   );
