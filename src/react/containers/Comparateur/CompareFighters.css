@@ -1,0 +1,26 @@
+.compare-fighters {
+    text-align: center;
+  }
+  
+  .fighters-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .vs {
+    font-size: 2rem;
+    margin: 0 1rem;
+  }
+  
+  .fighters-stats {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 2rem;
+  }
+  
+  .prediction-button {
+    margin-top: 2rem;
+  }
+  

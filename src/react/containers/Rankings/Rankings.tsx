@@ -3,8 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { gql } from '@apollo/client';
 import { useAstroQuery } from '../../helpers/apollo';
 import CardAthlete from '../../components/CardAthlete'; // Import du nouveau composant
-import SearchBarFighter from '../../components/SearchBarFighter';
-
 
 const GET_RANKINGS = gql`
   query GetRankings($pattern: String!) {
@@ -69,11 +67,7 @@ const Rankings = ({ initialCategory }) => {
   const [fighters, setFighters] = useState([]);
   const [category, setCategory] = useState(initialCategory || 'Lightweight');
   const pattern = `#% ${category}%`;
-  const [fighter, setFighter] = useState(null);
 
-  useEffect(() => {
-    console.log(fighter)
-  }, [fighter])
   const { data: rankingData, loading: rankingLoading, error: rankingError } = useAstroQuery(GET_RANKINGS, {
     variables: { pattern },
   });
@@ -119,7 +113,6 @@ const Rankings = ({ initialCategory }) => {
 
   return (
     <div className="container mx-auto p-4">
-      <SearchBarFighter onFighterSelect={setFighter} />
       <h1 className="text-3xl font-bold text-center mb-6">{category} Division Rankings</h1>
       <div className="mb-4 flex justify-center">
         <select

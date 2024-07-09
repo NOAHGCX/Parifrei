@@ -3,7 +3,12 @@ import Layout from "../../astro/layouts/Layout.astro";
 import Card from "../../components/Card.astro";
 import "../../styles/global.css";
 import Exemple from "../../react/components/Exemple";
-import Rankings from "../../react/containers/Rankings";
+import Comparateur from "../../react/containers/Comparateur";
 ---
 
 <Layout title="Comparateur" />
+    <Comparateur client:only/>
+</Layout>
+
+
+
