@@ -186,9 +186,15 @@ const UpcomingEvents = () => {
       </div>
       <div className="flex flex-wrap justify-center">
         {currentEvents.map(event => (
-          <a href={`/Prochains-evenements/${event.id}`} key={event.id}>
+          <a href={`/Evenements/${event.id}`} key={event.id}>
             <div className="bg-white rounded-lg shadow-lg m-6 max-w-xs w-full transition-transform transform hover:-translate-y-1" style={{ height: '350px' }}>
-              <img src="https://www.sportsnet.ca/wp-content/uploads/2024/01/UFC_FightNight_16x9.png" alt={event.event_name} className="w-full h-48 object-cover rounded-t-lg" />
+              <img
+                src={event.event_name.startsWith("UFC Fight Night")
+                  ? "https://www.sportsnet.ca/wp-content/uploads/2024/01/UFC_FightNight_16x9.png"
+                  : "https://play-lh.googleusercontent.com/-yL16irvtghCeGC5PVmI4txRKE1bMWLwieFqv6PjqyC01U4suDtvlsYkVTzxYld9ND4"}
+                alt={event.event_name}
+                className="w-full h-48 object-cover rounded-t-lg"
+              />
               <div className="p-4 flex flex-col justify-between h-full">
                 <div>
                   <h2 className="text-xl font-semibold mb-2">{event.event_name}</h2>
