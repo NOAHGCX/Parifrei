@@ -29,3 +29,28 @@ export const GET_EVENTS = gql`
     }
   }
 `;
+
+export const GET_EVENT = gql`
+  query GetEvent($eventId: Int!) {
+    events(where: {id: {_eq: $eventId}}) {
+      id
+      event_name
+      date
+      location
+      fights {
+        id
+        kd
+        result
+        round
+        time
+        weight_class
+        td
+        sub
+        str
+        method
+        fighter
+        event_id
+      }
+    }
+  }
+`;

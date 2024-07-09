@@ -63,15 +63,17 @@ const UpcomingEvents = () => {
       <h1 className="text-4xl font-bold text-center mb-8">Prochains événements</h1>
       <div className="flex flex-wrap justify-center">
         {data.events.map(event => (
-          <div key={event.id} className="bg-white rounded-lg shadow-lg m-6 max-w-xs transition-transform transform hover:-translate-y-1">
-            {/* Exemple d'image */}
-            <img src="https://www.sportsnet.ca/wp-content/uploads/2024/01/UFC_FightNight_16x9.png" alt={event.event_name} className="w-full h-48 object-cover rounded-t-lg" />
-            <div className="p-4">
-              <h2 className="text-xl font-semibold mb-2">{event.event_name}</h2>
-              <p className="text-gray-600 mb-1">{event.date}</p>
-              <p className="text-gray-600">{event.location}</p>
+          <a href={`/Prochains-evenements/${event.id}`}>
+            <div key={event.id} className="bg-white rounded-lg shadow-lg m-6 max-w-xs transition-transform transform hover:-translate-y-1">
+              {/* Exemple d'image */}
+              <img src="https://www.sportsnet.ca/wp-content/uploads/2024/01/UFC_FightNight_16x9.png" alt={event.event_name} className="w-full h-48 object-cover rounded-t-lg" />
+              <div className="p-4">
+                <h2 className="text-xl font-semibold mb-2">{event.event_name}</h2>
+                <p className="text-gray-600 mb-1">{event.date}</p>
+                <p className="text-gray-600">{event.location}</p>
+              </div>
             </div>
-          </div>
+          </a>
         ))}
       </div>
     </div>
