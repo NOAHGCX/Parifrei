@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import SearchBarFighter from '../../components/SearchBarFighter';
 import AthleteStatisticsDuo from '../../components/AthleteStatisticsDuo';
 import FighterImage from '../../components/FighterImage';
+import WinProbabilityProgress from '../../components/win_proba/winProba';
 
 const CompareFighters = () => {
   const [fighter1, setFighter1] = useState(null);
@@ -44,6 +45,15 @@ const CompareFighters = () => {
         >
           Prédire le combat
         </button>
+      )}
+      {showStatistics && (
+        <div className="w-full mt-6">
+          <div className="text-center text-3xl font-bold mt-4">
+                Chance de l'emporter
+          </div>
+          <WinProbabilityProgress fighter1={fighter1} fighter2={fighter2} />
+          
+        </div>
       )}
       {showStatistics && (
         <div className="w-full mt-6">
