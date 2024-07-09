@@ -3,7 +3,7 @@ import React from 'react';
 const FighterImage = ({ fighter }) => {
   
 console.log(fighter);
-  let profileImage = fighter.images[0]?.url;
+  let profileImage = fighter.images[1]?.url;
 
   if (!profileImage || profileImage.includes("no-profile-image.png") || profileImage.includes("silhouette-headshot-female.png")) {
     // Use fallback image if no profile image or if it's the "no-profile-image"
