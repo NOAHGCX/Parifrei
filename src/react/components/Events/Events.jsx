@@ -8,7 +8,7 @@ import { useAstroQuery } from '../../helpers/apollo';
 const GET_UPCOMING_EVENTS = gql`
   query GetUpcomingEvents {
     events(
-      where: { date: { _gte: "2024-07-09" } }
+      where: { date: { _gte: "2024-05-01" } }
       order_by: { date: asc }
     ) {
       id
