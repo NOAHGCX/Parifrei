@@ -109,7 +109,7 @@ QueryAthletes.displayName = 'QueryAthletes';
 
 const AthletesListContent = () => {
   const [items, setItems] = useState([]);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(12);
   const [keywords, setKeywords] = useState('');
   const [weightClass, setWeightClass] = useState('');
   const [page, setPage] = useState(0);
