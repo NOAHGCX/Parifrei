@@ -19,7 +19,7 @@ const CompareFighters = () => {
 
   return (
     <div className="flex flex-col items-center p-5">
-      <h1 className="text-center text-3xl font-bold mb-6">Comparaison des combattants</h1>
+      <h1 className="text-center text-3xl font-bold mb-6">Choisissez des combatants:</h1>
       <div className="flex flex-col md:flex-row items-center justify-center gap-2">
         <SearchBarFighter onFighterSelect={setFighter1} />
         <div className="text-2xl font-bold">VS</div>
