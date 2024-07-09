@@ -76,7 +76,6 @@ const Rankings = ({ initialCategory }) => {
 
   useEffect(() => {
     if (rankingData && titleHolderData) {
-      console.log(rankingData, titleHolderData);
       const filteredFighters = (rankingData.tags || [])
         .filter(tag => tag.name.includes(category))
         .map(tag => ({
@@ -104,7 +103,6 @@ const Rankings = ({ initialCategory }) => {
         return acc;
       }, []);
 
-      console.log(champion, interimChampion, filteredFighters);
 
       setFighters([champion, interimChampion, ...filteredFighters]);
     }
